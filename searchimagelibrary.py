@@ -54,7 +54,7 @@ def getROI(img):
 def colorHistogram(img):
   lower_threshold = 30
   upper_threshold = 220
-  hist = cv.calcHist([img], [0, 1, 2], None, [64,64,64], [lower_threshold, upper_threshold, lower_threshold, upper_threshold, lower_threshold, upper_threshold]) #calculate histogram using the image
+  hist = cv.calcHist([img], [0, 1, 2], None, [8,8,8], [lower_threshold, upper_threshold, lower_threshold, upper_threshold, lower_threshold, upper_threshold]) #calculate histogram using the image
   hist = cv.normalize(hist, hist).flatten()
   return hist
 
@@ -130,7 +130,7 @@ def colorMatch(img, df, num_results = 10):
 
   lower_threshold = 30
   upper_threshold = 220
-  img_hist = cv.calcHist([img], [0, 1, 2], None, [64,64,64], [lower_threshold, upper_threshold, lower_threshold, upper_threshold, lower_threshold, upper_threshold])
+  img_hist = cv.calcHist([img], [0, 1, 2], None, [8,8,8], [lower_threshold, upper_threshold, lower_threshold, upper_threshold, lower_threshold, upper_threshold])
   img_hist = cv.normalize(img_hist, img_hist).flatten()
 
 # loop over the comparison methods
@@ -140,10 +140,9 @@ def colorMatch(img, df, num_results = 10):
   hellinger_dist = []
   for (methodName, method) in OPENCV_METHODS:
     for hist in df['color_histogram']:
-      print(len(hist), type(hist))
-      print(len(hist.split(" ")))
-      print(hist)
-      hist = json.loads(hist)
+      if type(hist) == str:
+        hist = hist.replace('\n', '')
+        hist = np.array(hist[1:len(hist) -1].split(), dtype=np.float32)
       d = cv.compareHist(img_hist, hist, method)
       if methodName == "Correlation":
         correl_dist.append(d)

@@ -16,6 +16,5 @@ gabor_vec_input = sil.processGaborVectorFromPath(input_img_path)
 # Move img into catalog
 os.replace(input_img_path, img_bank_path + img_to_add_filename)
 
-# TODO store new csv color and texture features
 
 print(f'Successfully added {img_to_add_filename} to the existing image bank!')
