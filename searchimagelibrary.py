@@ -4,12 +4,11 @@ import numpy as np
 import cv2 as cv
 import json
 
-from google.colab.patches import cv2_imshow
 import matplotlib.pyplot as plt
 import imutils
 
 # Reading the json as a dict
-local_path_root = ".."
+local_path_root = ""
 with open(f"{local_path_root}labels.json") as json_data:
     data = json.load(json_data)
 categories_df = pd.DataFrame(data['categories'])
@@ -20,7 +19,7 @@ import os
 from os import listdir
 from os.path import isfile, join
 
-img_feature_df = pd.read_csv(f'{local_path_root}/img_library_color_texture_features.csv')
+img_feature_df = pd.read_csv(f'{local_path_root}img_library_color_texture_features.csv')
 
 def displayImages(imgs):
   resized_imgs = []
@@ -195,12 +194,12 @@ def colorPlusTextureMatch(img, df, num_results = 10):
   merged_results['mean_match'] = .5*(merged_results['texture_match'] + merged_results['hellinger'])
   return merged_results.sort_values(by = 'mean_match', ascending = True).head(num_results + 1).tail(-1)
 
-print(img_feature_df.iloc[666]['path'])
-test_img = pathsToImages([img_feature_df.iloc[666]['path']])
-parasite = img_feature_df.iloc[666]['parasite']
+#print(img_feature_df.iloc[666]['path'])
+#test_img = pathsToImages([img_feature_df.iloc[666]['path']])
+#parasite = img_feature_df.iloc[666]['parasite']
 
-test_results = textureMatch(test_img[0], img_feature_df,5)
-texture_result_images = pathsToImages(test_results['path'])
+#test_results = textureMatch(test_img[0], img_feature_df,5)
+#texture_result_images = pathsToImages(test_results['path'])
 
-show_images(test_img, figsize=(8,5), title = f"Search Query - {parasite}")
-show_images(texture_result_images, title = "Correlation", columns = len(texture_result_images))
+#show_images(test_img, figsize=(8,5), title = f"Search Query - {parasite}")
+#show_images(texture_result_images, title = "Correlation", columns = len(texture_result_images))
