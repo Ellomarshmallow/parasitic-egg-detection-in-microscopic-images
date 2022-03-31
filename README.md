@@ -9,4 +9,4 @@ In the project folder, run:
 
 2. Search for similar images given an input image
 In the project folder, run: 
-`python add_img_to_index.py >>path-to-your-img<<`
+`python search_similar_imgs.py >>path-to-your-img<<`
